@@ -18,15 +18,23 @@ export class TeacherService {
     return await this.teacher.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} teacher`;
+  async findTeacher(id): Promise<Teacher> {
+    return await this.teacher.findOne(id, {relations: ['students'] });
+  }
+
+  async findOne(id: number): Promise<Teacher> {
+    return await this.teacher.findOne({
+      where: {
+        id: id
+      }
+    });
   }
 
   update(id: number, updateTeacherDto: UpdateTeacherDto) {
-    return `This action updates a #${id} teacher`;
+    return this.teacher.update(id, updateTeacherDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} teacher`;
+    return this.teacher.delete(id);
   }
 }

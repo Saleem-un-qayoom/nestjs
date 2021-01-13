@@ -3,6 +3,7 @@ import { TeacherService } from './teacher.service';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { Teacher } from './entities/teacher.entity';
+import { timer } from 'rxjs';
 
 @Controller('teacher')
 export class TeacherController {
@@ -19,8 +20,13 @@ export class TeacherController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.teacherService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<Teacher> {
+    return await this.teacherService.findOne(+id);
+  }
+
+  @Get('student/:id')
+  async findTeacher(@Param('id') id: string): Promise<Teacher> {
+    return await this.teacherService.findTeacher(id);
   }
 
   @Put(':id')
