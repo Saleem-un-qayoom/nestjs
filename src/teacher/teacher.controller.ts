@@ -11,7 +11,9 @@ export class TeacherController {
 
   @Post()
   create(@Body() createTeacherDto: CreateTeacherDto) {
+    console.log(createTeacherDto);
     return this.teacherService.create(createTeacherDto);
+    
   }
 
   @Get()
@@ -27,6 +29,11 @@ export class TeacherController {
   @Get('student/:id')
   async findTeacher(@Param('id') id: string): Promise<Teacher> {
     return await this.teacherService.findTeacher(id);
+  }
+
+  @Put('update/:id')
+  async updateTeacher(@Param('id') id: number, @Body() createTeacherDto: CreateTeacherDto) {
+    return await this.teacherService.updateTeacher(id, createTeacherDto);
   }
 
   @Put(':id')

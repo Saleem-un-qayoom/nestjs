@@ -1,5 +1,5 @@
 import { Student } from "src/student/entities/student.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Teacher {
@@ -12,6 +12,17 @@ export class Teacher {
     @Column()
     subject: string;
 
-    @OneToMany(() => Student, student => student.teacher)
+    @ManyToMany(() => Student)
+    @JoinTable({
+        name: 'teacher_student',
+        joinColumn: {
+          name: 'teacher_id',
+          referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+          name: 'student_id',
+          referencedColumnName: 'id',
+        },
+      })
     students: Student[];
 }
